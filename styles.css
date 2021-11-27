@@ -1,0 +1,27 @@
+.search {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  width: 400px;
+  height: 25px;
+}
+
+button {
+  height: 25px;
+  margin-left: 1rem;
+}
+
+.vet-container {
+  display: flex;
+  width: 100%;
+  background-color: aqua;
+}
+
+.crypto-list {
+  overflow: hidden;
+  word-wrap: break-word;
+  max-width: 900px;
+  margin: 0 auto;
+}

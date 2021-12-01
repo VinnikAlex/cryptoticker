@@ -3,6 +3,11 @@ let coins = 10;
 
 let showMore = document.querySelector("#show-more");
 
+// live price ticker
+// let coinType;
+// let ws = new WebSocket(
+//   "wss://stream.binance.com:9443/ws/" + coinType + "busd@trade"
+// );
 // load top 10 marketcap coins
 requestApi();
 
@@ -18,7 +23,6 @@ function cryptoDetails(info) {
   //call addDivs() and pass api information into it
   addDivs(info);
 
-  // specify how many rows are required:
   // number of crypto coins / 4 rows
   let numColumns = info.length / 4;
   // specify number of columns depending on how many coins are showing
@@ -39,6 +43,29 @@ function cryptoDetails(info) {
     // add the daily change to the cryptoChange div
     document.querySelector("#cryptoChange" + [i]).innerHTML =
       "Daily Change:" + " " + info[i].price_change_percentage_24h;
+
+    //gradually loads live ticker as time progresses
+    let coinType = info[i].symbol;
+    let lastPrice = null;
+    let ws = new WebSocket(
+      "wss://stream.binance.com:9443/ws/" + coinType + "busd@trade"
+    );
+
+    ws.onmessage = (event) => {
+      let stockObject = JSON.parse(event.data);
+      let price = parseFloat(stockObject.p);
+      document.querySelector("#cryptoPrice" + [i]).innerHTML =
+        "Price:" + " " + "$" + parseFloat(stockObject.p);
+      // change colour
+      document.querySelector("#cryptoPrice" + [i]).style.color =
+        !lastPrice || lastPrice === price
+          ? "black"
+          : price > lastPrice
+          ? "green"
+          : "red";
+
+      lastPrice = price;
+    };
   }
 }
 
@@ -84,32 +111,7 @@ function removeElements(info) {
     for (let i = 0; i < info.length; i++) {
       grid.removeChild(grid.childNodes[0]);
     }
-    coins = 100;
+    coins = 20;
     requestApi();
   });
 }
-
-// function addContent(index) {
-//   div[index].innerHTML += info.symbol;
-// }
-
-// function updateCoinPair() {
-//   vet.onmessage = (event) => {
-//     let cryptoObject = JSON.parse(event.data);
-//     //return VET price to 6 decimal points
-//     let vetPrice = parseFloat(cryptoObject.p).toFixed(6);
-//     vetPriceElement.innerText = "$" + vetPrice;
-
-//     //change colour depending on if price goes up/down/stays the same.
-//     vetPriceElement.style.color =
-//       !lastPrice || lastPrice === vetPrice
-//         ? "black"
-//         : vetPrice > lastPrice
-//         ? "green"
-//         : "red";
-
-//     lastPrice = vetPrice;
-
-//     console.log(cryptoObject);
-//   };
-// }

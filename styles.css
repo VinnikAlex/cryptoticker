@@ -11,6 +11,42 @@ body {
   background-color: rgb(240, 239, 239);
 }
 
+header {
+  margin-left: 20%;
+}
+
+.global-stat {
+  position: relative;
+  top: 3rem;
+  margin-left: 3rem;
+  padding: 1rem;
+  font-weight: 400;
+}
+
+.coin-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width: 100%;
+  text-align: left;
+  padding: 3rem;
+}
+
+.coin-overview div {
+  padding: 1rem;
+}
+
+.coin-overview h3 {
+  font-weight: 400;
+  color: grey;
+  margin-bottom: 1rem;
+}
+
+.coin-overview h1 {
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
 .sidebar {
   height: 100vh;
   width: 20%;
@@ -75,13 +111,14 @@ main {
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 5rem;
+  padding: 1rem;
   row-gap: 10rem;
   grid-template-columns: repeat(5, 1fr);
 }
 
 .button {
   display: flex;
+  margin: 5rem;
 }
 
 .show-more {
@@ -122,16 +159,14 @@ main {
 }
 
 @media only screen and (max-width: 1420px) {
-  .crypto-grid {
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-    row-gap: 3rem;
+  header {
+    margin-left: 0;
   }
-}
-
-@media only screen and (max-width: 1420px) {
   main {
     margin-left: 0;
+  }
+  .global-stat {
+    margin-left: 3rem;
   }
   .crypto-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -147,6 +182,9 @@ main {
   main {
     margin-left: 0;
   }
+  .global-stat {
+    margin-left: 3rem;
+  }
   .crypto-grid {
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
@@ -158,6 +196,13 @@ main {
 }
 
 @media only screen and (max-width: 845px) {
+  header h1 {
+    text-align: center;
+  }
+  .coin-overview {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
   main {
     margin-left: 0;
   }
@@ -172,8 +217,8 @@ main {
 }
 
 .crypto-grid div {
-  width: 20rem;
-  height: 20rem;
+  width: 21rem;
+  height: 18rem;
   margin: 0 auto;
   background-color: rgb(255, 255, 255);
   font-size: 1.2rem;

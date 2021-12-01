@@ -3,11 +3,6 @@ let coins = 10;
 
 let showMore = document.querySelector("#show-more");
 
-// live price ticker
-// let coinType;
-// let ws = new WebSocket(
-//   "wss://stream.binance.com:9443/ws/" + coinType + "busd@trade"
-// );
 // load top 10 marketcap coins
 requestApi();
 
@@ -41,8 +36,20 @@ function cryptoDetails(info) {
     document.querySelector("#cryptoCap" + [i]).innerHTML =
       "Market Cap:" + " " + info[i].market_cap;
     // add the daily change to the cryptoChange div
-    document.querySelector("#cryptoChange" + [i]).innerHTML =
-      "Daily Change:" + " " + info[i].price_change_percentage_24h;
+    let cryptoChange = document.querySelector("#cryptoChange" + [i]);
+    if (info[i].price_change_percentage_24h > 0) {
+      cryptoChange.innerHTML =
+        "Daily Change:" + " " + "+" + info[i].price_change_percentage_24h;
+      cryptoChange.style.color = "green";
+    } else if (info[i].price_change_percentage_24h < 0) {
+      cryptoChange.innerHTML =
+        "Daily Change:" + " " + info[i].price_change_percentage_24h;
+      cryptoChange.style.color = "red";
+    } else {
+      cryptoChange.innerHTML =
+        "Daily Change:" + " " + info[i].price_change_percentage_24h;
+      cryptoChange.style.color = "black";
+    }
 
     //gradually loads live ticker as time progresses
     let coinType = info[i].symbol;

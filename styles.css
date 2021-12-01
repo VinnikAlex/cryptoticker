@@ -7,6 +7,10 @@
   font-family: "Montserrat", sans-serif;
 }
 
+body {
+  background-color: rgb(240, 239, 239);
+}
+
 .sidebar {
   height: 100vh;
   width: 20%;
@@ -73,11 +77,102 @@ main {
   height: 100%;
   padding: 5rem;
   row-gap: 10rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.button {
+  display: flex;
+}
+
+.show-more {
+  outline: none;
+  text-decoration: none;
+  padding: 10px 24px;
+  margin: 0 auto;
+  border-radius: 5px;
+  background-color: white;
+  border: 1px solid black;
+  transition: all ease 0.2s;
+}
+
+.show-more:hover {
+  transform: scale(1.03);
+  background-color: rgba(4, 0, 36, 0.781);
+  color: white;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 2350px) {
+  .crypto-grid {
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    row-gap: 3rem;
+  }
+}
+
+@media only screen and (max-width: 1900px) {
+  .crypto-grid {
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    row-gap: 3rem;
+  }
+  .button {
+    margin-bottom: 10rem;
+  }
+}
+
+@media only screen and (max-width: 1420px) {
+  .crypto-grid {
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    row-gap: 3rem;
+  }
+}
+
+@media only screen and (max-width: 1420px) {
+  main {
+    margin-left: 0;
+  }
+  .crypto-grid {
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    row-gap: 3rem;
+  }
+  .sidebar {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1170px) {
+  main {
+    margin-left: 0;
+  }
+  .crypto-grid {
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    row-gap: 3rem;
+  }
+  .sidebar {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 845px) {
+  main {
+    margin-left: 0;
+  }
+  .crypto-grid {
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
+    row-gap: 1rem;
+  }
+  .sidebar {
+    display: none;
+  }
 }
 
 .crypto-grid div {
-  width: 90%;
+  width: 20rem;
   height: 20rem;
   margin: 0 auto;
   background-color: rgb(255, 255, 255);
@@ -99,4 +194,11 @@ main {
   position: relative;
   top: -22%;
   float: right;
+}
+
+.crypto-grid p {
+  padding: 1rem;
+  position: relative;
+  top: 10%;
+  font-size: 1rem;
 }

@@ -40,8 +40,10 @@ const numberStyle = new Intl.NumberFormat("en-US", {
 }
 
 // load top 10 marketcap coins on application start
-requestApi();
-requestCoinRanking();
+window.onload = function () {
+  requestApi();
+  requestCoinRanking();
+};
 
 // coinranking api
 function requestCoinRanking() {

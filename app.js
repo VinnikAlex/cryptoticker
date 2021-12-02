@@ -5,6 +5,7 @@ let topCoinsText = document.querySelector("#show-coins");
 let cryptoCount = 10;
 topCoinsText.innerHTML = cryptoCount;
 
+// show more button
 let showMore = document.querySelector("#show-more");
 
 //currency convertor/formatter
@@ -20,10 +21,29 @@ const numberStyle = new Intl.NumberFormat("en-US", {
   style: "decimal",
 });
 
-// load top 10 marketcap coins
+//mobile navbar show/hide behaviour
+{
+  const nav = document.querySelector(".sidebar");
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener("scroll", () => {
+    if (lastScrollY < window.scrollY) {
+      nav.classList.add("nav--hidden");
+      //   console.log(lastScrollY);
+    } else {
+      nav.classList.remove("nav--hidden");
+      //   console.log(lastScrollY);
+    }
+
+    lastScrollY = window.scrollY;
+  });
+}
+
+// load top 10 marketcap coins on application start
 requestApi();
 requestCoinRanking();
 
+// coinranking api
 function requestCoinRanking() {
   fetch("https://coinranking1.p.rapidapi.com/stats", {
     method: "GET",
@@ -39,6 +59,7 @@ function requestCoinRanking() {
     });
 }
 
+// insert coinranking api data into application
 function coinRank(info) {
   console.log(info);
   let volume = document.querySelector("#volume");
@@ -54,6 +75,7 @@ function coinRank(info) {
   totalMarkets.innerHTML = numberStyle.format(info.data.totalMarkets);
 }
 
+// coingecko api
 function requestApi() {
   let api = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${coins}&page=1&sparkline=false`;
   fetch(api)
@@ -64,6 +86,7 @@ function requestApi() {
     });
 }
 
+// use coingecko api in application
 function cryptoDetails(info) {
   console.log(info.length);
   //call addDivs() and pass api information into it
@@ -83,7 +106,8 @@ function cryptoDetails(info) {
       "Market Cap:" + " " + formatter.format(info[i].market_cap);
     // add the daily change to the cryptoChange div
     let cryptoChange = document.querySelector("#cryptoChange" + [i]);
-    // check for dailyChange
+
+    // check for dailyChange and display it as red OR green percentage
     if (info[i].price_change_percentage_24h > 0) {
       cryptoChange.innerHTML =
         "Daily Change:" +
@@ -133,6 +157,7 @@ function cryptoDetails(info) {
   }
 }
 
+// function that adds divs into gridbox and supplementary tags about coin information.
 function addDivs(info) {
   console.log(info.length);
 
@@ -174,30 +199,28 @@ function addDivs(info) {
   hideDiv(info);
 }
 
-// hides all cryptocurrencies which aren't supposed to show
+// hides all cryptocurrencies which aren't supposed to show before user clicks "show more"
 function hideDiv(info) {
   for (let i = cryptoCount; i < info.length; i++) {
     let selectDiv = document.querySelector("#div" + i);
     console.log(selectDiv);
     // hide divs that arent supposed to show
     selectDiv.style.display = "none";
-    // number of crypto coin columns
-    let numColumns = cryptoCount / 5;
-    // specify number of columns depending on how many coins are showing
-    grid.style.gridTemplateRows = `repeat(${numColumns}, 1fr)`;
   }
 
-  // update the "top * cryptocurrencies text on button click"
+  // update the "top 10 cryptocurrencies" text on button click"
   showMore.addEventListener("click", (e) => {
     if (cryptoCount < 100) {
+      // add 10 to this variable each click
       cryptoCount += 10;
       topCoinsText.innerHTML = cryptoCount;
+      //run this function
       showDiv();
-      // console.log("click");
     }
   });
 }
 
+// function which is called inside of hideDiv() and shows the next 10 crypto coins on button click
 function showDiv() {
   for (let i = cryptoCount - 1; i >= 0; i--) {
     let selectDiv = document.querySelector("#div" + i);

@@ -1,5 +1,9 @@
 let grid = document.querySelector("#crypto-grid");
-let coins = 10;
+let coins = 100;
+
+let topCoinsText = document.querySelector("#show-coins");
+let cryptoCount = 10;
+topCoinsText.innerHTML = cryptoCount;
 
 let showMore = document.querySelector("#show-more");
 
@@ -11,6 +15,7 @@ const formatter = new Intl.NumberFormat("en-US", {
   notation: "compact",
 });
 
+// number style formatter
 const numberStyle = new Intl.NumberFormat("en-US", {
   style: "decimal",
 });
@@ -53,18 +58,16 @@ function requestApi() {
   let api = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${coins}&page=1&sparkline=false`;
   fetch(api)
     .then((response) => response.json())
-    .then((result) => cryptoDetails(result));
+    .then((result) => cryptoDetails(result)) //.length = 10
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
 function cryptoDetails(info) {
-  console.log(info);
+  console.log(info.length);
   //call addDivs() and pass api information into it
   addDivs(info);
-
-  // number of crypto coins / 4 rows
-  let numColumns = info.length / 4;
-  // specify number of columns depending on how many coins are showing
-  grid.style.gridTemplateRows = `repeat(${numColumns}, 1fr)`;
 
   // add the name to the cryptoName div
   for (let i = 0; i < info.length; i++) {
@@ -132,15 +135,17 @@ function cryptoDetails(info) {
 
 function addDivs(info) {
   console.log(info.length);
+
   //loop through every api index and add div to every crypto token
   for (let i = 0; i < info.length; i++) {
     //create a div for every crypto coin
     let div = document.createElement("div");
+
     // create class name "div" + i to make each div unique
     div.setAttribute("id", "div" + i);
     grid.appendChild(div);
 
-    //create a div to store each cryptos name
+    //create a h3 to store each cryptos name
     let nameHeading = document.createElement("h3");
     nameHeading.setAttribute("id", "cryptoName" + i);
     div.appendChild(nameHeading);
@@ -165,18 +170,38 @@ function addDivs(info) {
     cryptoChange.setAttribute("id", "cryptoChange" + i);
     div.appendChild(cryptoChange);
   }
-
-  // removeDivs(info);
+  //after loop run this function
+  hideDiv(info);
 }
 
-// function removeDivs(info) {
-//   showMore.addEventListener("click", (e) => {
-//     for (let i = 0; i < info.length; i++) {
-//       grid.removeChild(grid.childNodes[0]);
-//       coins++;
-//       console.log("OKOK" + info.length);
-//     }
+// hides all cryptocurrencies which aren't supposed to show
+function hideDiv(info) {
+  for (let i = cryptoCount; i < info.length; i++) {
+    let selectDiv = document.querySelector("#div" + i);
+    console.log(selectDiv);
+    // hide divs that arent supposed to show
+    selectDiv.style.display = "none";
+    // number of crypto coin columns
+    let numColumns = cryptoCount / 5;
+    // specify number of columns depending on how many coins are showing
+    grid.style.gridTemplateRows = `repeat(${numColumns}, 1fr)`;
+  }
 
-//     requestApi();
-//   });
-// }
+  // update the "top * cryptocurrencies text on button click"
+  showMore.addEventListener("click", (e) => {
+    if (cryptoCount < 100) {
+      cryptoCount += 10;
+      topCoinsText.innerHTML = cryptoCount;
+      showDiv();
+      // console.log("click");
+    }
+  });
+}
+
+function showDiv() {
+  for (let i = cryptoCount - 1; i >= 0; i--) {
+    let selectDiv = document.querySelector("#div" + i);
+    selectDiv.style.display = "block";
+    console.log(selectDiv);
+  }
+}

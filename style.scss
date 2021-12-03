@@ -75,7 +75,7 @@ header {
     li {
       color: white;
       font-size: 1.2rem;
-      line-height: 2.5;
+      // line-height: 2.5;
       padding: 1rem;
       margin: 1rem;
       margin-left: 0;
@@ -323,15 +323,24 @@ main {
     row-gap: 5rem;
   }
 
-  .menu-items {
-    font-size: 1.5rem;
-    li {
-      text-align: left;
+  .sidebar {
+    .mobile-navbar {
+      ul {
+        text-align: left;
+        li {
+          font-size: 1.2rem;
+          margin: 1rem;
+        }
+        // svg {
+        //   height: 32px;
+        //   width: 32px;
+        // }
+      }
     }
-    svg {
-      height: 22px;
-      width: 22px;
-    }
+  }
+
+  .no-scroll--hidden {
+    overflow: hidden;
   }
 
   .nav--hidden {

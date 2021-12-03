@@ -47,6 +47,7 @@ const numberStyle = new Intl.NumberFormat("en-US", {
   let xMenu = document.querySelector(".x-menu");
   let navMenu = document.querySelector(".mobile-navbar");
   let navContent = document.querySelector(".menu-items");
+  let body = document.getElementsByTagName("BODY")[0];
 
   hamburgerMenu.addEventListener("click", () => {
     console.log("CLICK!");
@@ -55,6 +56,7 @@ const numberStyle = new Intl.NumberFormat("en-US", {
     hamburgerMenu.style.display = "none";
     xMenu.style.display = "block";
     navContent.style.display = "flex";
+    body.classList.add("no-scroll--hidden");
   });
 
   xMenu.addEventListener("click", () => {
@@ -62,6 +64,7 @@ const numberStyle = new Intl.NumberFormat("en-US", {
     hamburgerMenu.style.display = "block";
     xMenu.style.display = "none";
     navContent.style.display = "none";
+    body.classList.remove("no-scroll--hidden");
   });
 
   // encountered bugs on rezising mobile to desktop view, this fixed it:

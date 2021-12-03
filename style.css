@@ -88,7 +88,6 @@ header {
 .sidebar .menu-items li {
   color: white;
   font-size: 1.2rem;
-  line-height: 2.5;
   padding: 1rem;
   margin: 1rem;
   margin-left: 0;
@@ -389,15 +388,15 @@ main {
             justify-content: center;
     row-gap: 5rem;
   }
-  .menu-items {
-    font-size: 1.5rem;
-  }
-  .menu-items li {
+  .sidebar .mobile-navbar ul {
     text-align: left;
   }
-  .menu-items svg {
-    height: 22px;
-    width: 22px;
+  .sidebar .mobile-navbar ul li {
+    font-size: 1.2rem;
+    margin: 1rem;
+  }
+  .no-scroll--hidden {
+    overflow: hidden;
   }
   .nav--hidden {
     -webkit-transform: translateY(-20rem);

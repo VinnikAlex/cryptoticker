@@ -28,9 +28,10 @@ const numberStyle = new Intl.NumberFormat("en-US", {
 let prevScrollpos = window.pageYOffset;
 
 window.onscroll = function () {
-  var currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
+  let currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos || window.pageYOffset <= 0) {
     document.querySelector(".sidebar").classList.remove("nav--hidden");
+    // console.log(prevScrollpos);
   } else {
     document.querySelector(".sidebar").classList.add("nav--hidden");
   }

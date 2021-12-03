@@ -41,6 +41,47 @@ const numberStyle = new Intl.NumberFormat("en-US", {
   });
 }
 
+// show website navigation on hamburger icon click (in mobile)
+{
+  let hamburgerMenu = document.querySelector(".hamburger-menu");
+  let xMenu = document.querySelector(".x-menu");
+  let navMenu = document.querySelector(".mobile-navbar");
+  let navContent = document.querySelector(".menu-items");
+
+  hamburgerMenu.addEventListener("click", () => {
+    console.log("CLICK!");
+    // sidebar.style.height = "100%";
+    navMenu.style.height = "100vh";
+    hamburgerMenu.style.display = "none";
+    xMenu.style.display = "block";
+    navContent.style.display = "flex";
+  });
+
+  xMenu.addEventListener("click", () => {
+    navMenu.style.height = "100%";
+    hamburgerMenu.style.display = "block";
+    xMenu.style.display = "none";
+    navContent.style.display = "none";
+  });
+
+  // encountered bugs on rezising mobile to desktop view, this fixed it:
+  window.addEventListener("resize", function () {
+    if (window.matchMedia("(min-width: 1500px)").matches) {
+      console.log("Screen width is at least 1500px");
+      navMenu.style.height = "100vh";
+      hamburgerMenu.style.display = "none";
+      xMenu.style.display = "none";
+      navContent.style.display = "flex";
+    } else {
+      console.log("Screen less than 1500px");
+      navMenu.style.height = "100%";
+      hamburgerMenu.style.display = "block";
+      xMenu.style.display = "none";
+      navContent.style.display = "none";
+    }
+  });
+}
+
 // load top 10 marketcap coins on application start
 window.onload = function () {
   requestApi();
@@ -65,7 +106,6 @@ function requestCoinRanking() {
 
 // insert coinranking api data into application
 function coinRank(info) {
-  console.log(info);
   let volume = document.querySelector("#volume");
   let totalCoins = document.querySelector("#total-coins");
   let totalExchange = document.querySelector("#total-exchange");
@@ -92,7 +132,6 @@ function requestApi() {
 
 // use coingecko api in application
 function cryptoDetails(info) {
-  console.log(info.length);
   //call addDivs() and pass api information into it
   addDivs(info);
 
@@ -110,6 +149,30 @@ function cryptoDetails(info) {
       "Market Cap:" + " " + formatter.format(info[i].market_cap);
     // add the daily change to the cryptoChange div
     let cryptoChange = document.querySelector("#cryptoChange" + [i]);
+
+    //websocket
+    let coinType = info[i].symbol;
+    let lastPrice = 0;
+    let ws = new WebSocket(
+      "wss://stream.binance.com:9443/ws/" + coinType + "busd@trade"
+    );
+
+    ws.onmessage = (event) => {
+      let stockObject = JSON.parse(event.data);
+      let price = parseFloat(stockObject.p);
+      //changes api price to live price
+      document.querySelector("#cryptoPrice" + [i]).innerText =
+        "Live Price:" + " " + "$" + parseFloat(stockObject.p);
+      // change colour
+      document.querySelector("#cryptoPrice" + [i]).style.color =
+        !lastPrice || lastPrice === price
+          ? "black"
+          : price > lastPrice
+          ? "green"
+          : "red";
+
+      lastPrice = price;
+    };
 
     // check for dailyChange and display it as red OR green percentage
     if (info[i].price_change_percentage_24h > 0) {
@@ -136,42 +199,41 @@ function cryptoDetails(info) {
       cryptoChange.style.color = "black";
     }
 
-    webSocket(info);
+    // webSocket(info);
   }
 }
 
-function webSocket(info) {
-  for (let i = 0; i < info.length; i++) {
-    //gradually loads live ticker as time progresses
-    let coinType = info[i].symbol;
-    let lastPrice = 0;
-    let ws = new WebSocket(
-      "wss://stream.binance.com:9443/ws/" + coinType + "busd@trade"
-    );
+// // websocket function
+// function webSocket(info) {
+//   for (let i = 0; i < info.length; i++) {
+//     //gradually loads live ticker as time progresses
+//     let coinType = info[i].symbol;
+//     let lastPrice = 0;
+//     let ws = new WebSocket(
+//       "wss://stream.binance.com:9443/ws/" + coinType + "busd@trade"
+//     );
 
-    ws.onmessage = (event) => {
-      let stockObject = JSON.parse(event.data);
-      let price = parseFloat(stockObject.p);
-      //changes api price to live price
-      document.querySelector("#cryptoPrice" + [i]).innerText =
-        "Price:" + " " + "$" + parseFloat(stockObject.p);
-      // change colour
-      document.querySelector("#cryptoPrice" + [i]).style.color =
-        !lastPrice || lastPrice === price
-          ? "black"
-          : price > lastPrice
-          ? "green"
-          : "red";
+//     ws.onmessage = (event) => {
+//       let stockObject = JSON.parse(event.data);
+//       let price = parseFloat(stockObject.p);
+//       //changes api price to live price
+//       document.querySelector("#cryptoPrice" + [i]).innerText =
+//         "Price:" + " " + "$" + parseFloat(stockObject.p);
+//       // change colour
+//       document.querySelector("#cryptoPrice" + [i]).style.color =
+//         !lastPrice || lastPrice === price
+//           ? "black"
+//           : price > lastPrice
+//           ? "green"
+//           : "red";
 
-      lastPrice = price;
-    };
-  }
-}
+//       lastPrice = price;
+//     };
+//   }
+// }
 
 // function that adds divs into gridbox and supplementary tags about coin information.
 function addDivs(info) {
-  console.log(info.length);
-
   //loop through every api index and add div to every crypto token
   for (let i = 0; i < info.length; i++) {
     //create a div for every crypto coin
@@ -214,7 +276,6 @@ function addDivs(info) {
 function hideDiv(info) {
   for (let i = cryptoCount; i < info.length; i++) {
     let selectDiv = document.querySelector("#div" + i);
-    console.log(selectDiv);
     // hide divs that arent supposed to show
     selectDiv.style.display = "none";
   }
@@ -236,6 +297,5 @@ function showDiv() {
   for (let i = cryptoCount - 1; i >= 0; i--) {
     let selectDiv = document.querySelector("#div" + i);
     selectDiv.style.display = "block";
-    console.log(selectDiv);
   }
 }

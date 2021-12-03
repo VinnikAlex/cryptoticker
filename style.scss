@@ -18,10 +18,11 @@ header {
 
 .global-stat {
   position: relative;
-  top: 3rem;
+
   margin-left: 3rem;
   padding: 1rem;
   font-weight: 400;
+  margin-top: 5%;
 }
 
 .coin-overview {
@@ -57,22 +58,29 @@ header {
   height: 100vh;
   width: 20%;
   position: fixed;
+  z-index: 1000;
   top: 0;
   left: 0;
-  /* position: fixed; */
   background-color: rgb(4, 0, 36);
-  ul {
+  .mobile-navbar {
+    background-color: rgb(4, 0, 36);
+    height: 100%;
+    width: 100%;
+    // transition: all ease 0.3s;
+  }
+  .menu-items {
     display: flex;
     flex-direction: column;
+    margin-top: 5%;
     li {
       color: white;
       font-size: 1.2rem;
       line-height: 2.5;
+      padding: 1rem;
       margin: 1rem;
       margin-left: 0;
       text-decoration: none;
       list-style-type: none;
-      width: 90%;
       transition: all ease 0.4s;
     }
     li:hover {
@@ -91,11 +99,10 @@ header {
 
 .logo {
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   background-color: rgb(4, 0, 36);
   padding: 2rem;
-  margin-bottom: 3rem;
   h1 {
     position: relative;
     color: #ffffff;
@@ -107,6 +114,12 @@ header {
   display: none;
 }
 .hamburger-menu:hover {
+  cursor: pointer;
+}
+.x-menu {
+  display: none;
+}
+.x-menu:hover {
   cursor: pointer;
 }
 
@@ -166,7 +179,7 @@ main {
     transition: all ease 0.2s;
   }
   .show-more:hover {
-    transform: scale(1.03);
+    transform: scale(0.97);
     background-color: rgba(4, 0, 36, 0.781);
     color: white;
     cursor: pointer;
@@ -179,10 +192,6 @@ main {
     justify-content: center;
     row-gap: 3rem;
   }
-  .logo {
-    padding-top: 2rem;
-    margin-bottom: 3rem;
-  }
 }
 
 @media only screen and (max-width: 1900px) {
@@ -191,31 +200,17 @@ main {
     justify-content: center;
     row-gap: 3rem;
   }
-  .logo {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    background-color: rgb(4, 0, 36);
-    padding: 2rem;
-    margin-bottom: 3rem;
-    .eth-logo {
-      display: none;
-      height: 70px;
-    }
-    .hamburger-menu {
-      display: none;
-    }
-  }
 }
 
-@media only screen and (max-width: 1420px) {
+@media only screen and (max-width: 1500px) {
   header {
     margin-left: 0;
-    margin-top: 10%;
+    margin-top: 8%;
   }
   main {
     margin-left: 0;
   }
+
   .global-stat {
     margin-left: 3rem;
   }
@@ -228,19 +223,38 @@ main {
     row-gap: 3rem;
   }
   .sidebar {
+    height: 5%;
     width: 100vw;
-    height: 0;
-    z-index: 5;
-    transition: all ease 0.1s;
-    ul {
-      display: none;
+    position: fixed;
+    transition: all ease 0.3s;
+    .mobile-navbar {
+      width: 100vw;
+      height: 100%;
+      background-color: rgb(4, 0, 36);
+      transition: all ease 0.3s;
+      ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        li {
+          font-size: 1.5rem;
+          margin-bottom: 3rem;
+        }
+        svg {
+          height: 32px;
+          width: 32px;
+        }
+      }
     }
   }
+
   .nav--hidden {
     transform: translateY(-20rem);
     box-shadow: none;
     transition: all ease 1s;
   }
+
   .logo {
     display: flex;
     justify-content: space-between;
@@ -249,13 +263,17 @@ main {
     h1 {
       font-size: 1.5rem;
     }
+
     .eth-logo {
       display: block;
       height: 50px;
     }
     .hamburger-menu {
       display: block;
-      margin-right: 2rem;
+      margin-right: 1rem;
+    }
+    .x-menu {
+      margin-right: 1rem;
     }
   }
 }
@@ -267,40 +285,16 @@ main {
   header {
     margin-top: 10%;
   }
-  .global-stat {
-    margin-left: 3rem;
-  }
   .crypto-grid {
     grid-template-columns: (1fr 1fr);
     justify-content: center;
     row-gap: 3rem;
   }
-  .sidebar {
-    width: 100vw;
-    height: 0;
-    z-index: 5;
-    transition: all ease 0.1s;
-    ul {
-      display: none;
-    }
-  }
+
   .nav--hidden {
     transform: translateY(-20rem);
     box-shadow: none;
     transition: all ease 1s;
-  }
-  .logo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    svg {
-      display: block;
-      margin-bottom: 1rem;
-    }
-    h1 {
-      font-size: 1.5rem;
-    }
   }
 }
 
@@ -328,15 +322,18 @@ main {
     justify-content: center;
     row-gap: 5rem;
   }
-  .sidebar {
-    width: 100vw;
-    height: 0;
-    z-index: 5;
-    transition: all ease 0.1s;
-    ul {
-      display: none;
+
+  .menu-items {
+    font-size: 1.5rem;
+    li {
+      text-align: left;
+    }
+    svg {
+      height: 22px;
+      width: 22px;
     }
   }
+
   .nav--hidden {
     transform: translateY(-20rem);
     box-shadow: none;
@@ -347,10 +344,6 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    svg {
-      display: block;
-      margin-bottom: 1rem;
-    }
     h1 {
       font-size: 1.5rem;
     }

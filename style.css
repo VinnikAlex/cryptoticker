@@ -18,10 +18,10 @@ header {
 
 .global-stat {
   position: relative;
-  top: 3rem;
   margin-left: 3rem;
   padding: 1rem;
   font-weight: 400;
+  margin-top: 5%;
 }
 
 .coin-overview {
@@ -62,13 +62,19 @@ header {
   height: 100vh;
   width: 20%;
   position: fixed;
+  z-index: 1000;
   top: 0;
   left: 0;
-  /* position: fixed; */
   background-color: #040024;
 }
 
-.sidebar ul {
+.sidebar .mobile-navbar {
+  background-color: #040024;
+  height: 100%;
+  width: 100%;
+}
+
+.sidebar .menu-items {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -76,29 +82,30 @@ header {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-top: 5%;
 }
 
-.sidebar ul li {
+.sidebar .menu-items li {
   color: white;
   font-size: 1.2rem;
   line-height: 2.5;
+  padding: 1rem;
   margin: 1rem;
   margin-left: 0;
   text-decoration: none;
   list-style-type: none;
-  width: 90%;
   -webkit-transition: all ease 0.4s;
   transition: all ease 0.4s;
 }
 
-.sidebar ul li:hover {
+.sidebar .menu-items li:hover {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
   background-color: #3686fd;
   cursor: pointer;
 }
 
-.sidebar ul svg {
+.sidebar .menu-items svg {
   margin-left: 1rem;
   margin-right: 1.5rem;
   position: relative;
@@ -109,15 +116,14 @@ header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: left;
-      -ms-flex-pack: left;
-          justify-content: left;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   background-color: #040024;
   padding: 2rem;
-  margin-bottom: 3rem;
 }
 
 .logo h1 {
@@ -131,6 +137,14 @@ header {
 }
 
 .hamburger-menu:hover {
+  cursor: pointer;
+}
+
+.x-menu {
+  display: none;
+}
+
+.x-menu:hover {
   cursor: pointer;
 }
 
@@ -204,8 +218,8 @@ main {
 }
 
 .button .show-more:hover {
-  -webkit-transform: scale(1.03);
-          transform: scale(1.03);
+  -webkit-transform: scale(0.97);
+          transform: scale(0.97);
   background-color: rgba(4, 0, 36, 0.781);
   color: white;
   cursor: pointer;
@@ -220,10 +234,6 @@ main {
             justify-content: center;
     row-gap: 3rem;
   }
-  .logo {
-    padding-top: 2rem;
-    margin-bottom: 3rem;
-  }
 }
 
 @media only screen and (max-width: 1900px) {
@@ -235,33 +245,12 @@ main {
             justify-content: center;
     row-gap: 3rem;
   }
-  .logo {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: left;
-        -ms-flex-pack: left;
-            justify-content: left;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    background-color: #040024;
-    padding: 2rem;
-    margin-bottom: 3rem;
-  }
-  .logo .eth-logo {
-    display: none;
-    height: 70px;
-  }
-  .logo .hamburger-menu {
-    display: none;
-  }
 }
 
-@media only screen and (max-width: 1420px) {
+@media only screen and (max-width: 1500px) {
   header {
     margin-left: 0;
-    margin-top: 10%;
+    margin-top: 8%;
   }
   main {
     margin-left: 0;
@@ -281,14 +270,35 @@ main {
     row-gap: 3rem;
   }
   .sidebar {
+    height: 5%;
     width: 100vw;
-    height: 0;
-    z-index: 5;
-    -webkit-transition: all ease 0.1s;
-    transition: all ease 0.1s;
+    position: fixed;
+    -webkit-transition: all ease 0.3s;
+    transition: all ease 0.3s;
   }
-  .sidebar ul {
+  .sidebar .mobile-navbar {
+    width: 100vw;
+    height: 100%;
+    background-color: #040024;
+    -webkit-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+  }
+  .sidebar .mobile-navbar ul {
     display: none;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+  .sidebar .mobile-navbar ul li {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .sidebar .mobile-navbar ul svg {
+    height: 32px;
+    width: 32px;
   }
   .nav--hidden {
     -webkit-transform: translateY(-20rem);
@@ -319,7 +329,10 @@ main {
   }
   .logo .hamburger-menu {
     display: block;
-    margin-right: 2rem;
+    margin-right: 1rem;
+  }
+  .logo .x-menu {
+    margin-right: 1rem;
   }
 }
 
@@ -330,9 +343,6 @@ main {
   header {
     margin-top: 10%;
   }
-  .global-stat {
-    margin-left: 3rem;
-  }
   .crypto-grid {
     -ms-grid-columns: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
@@ -341,16 +351,6 @@ main {
             justify-content: center;
     row-gap: 3rem;
   }
-  .sidebar {
-    width: 100vw;
-    height: 0;
-    z-index: 5;
-    -webkit-transition: all ease 0.1s;
-    transition: all ease 0.1s;
-  }
-  .sidebar ul {
-    display: none;
-  }
   .nav--hidden {
     -webkit-transform: translateY(-20rem);
             transform: translateY(-20rem);
@@ -358,25 +358,6 @@ main {
             box-shadow: none;
     -webkit-transition: all ease 1s;
     transition: all ease 1s;
-  }
-  .logo {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    padding: 1rem;
-  }
-  .logo svg {
-    display: block;
-    margin-bottom: 1rem;
-  }
-  .logo h1 {
-    font-size: 1.5rem;
   }
 }
 
@@ -408,15 +389,15 @@ main {
             justify-content: center;
     row-gap: 5rem;
   }
-  .sidebar {
-    width: 100vw;
-    height: 0;
-    z-index: 5;
-    -webkit-transition: all ease 0.1s;
-    transition: all ease 0.1s;
+  .menu-items {
+    font-size: 1.5rem;
   }
-  .sidebar ul {
-    display: none;
+  .menu-items li {
+    text-align: left;
+  }
+  .menu-items svg {
+    height: 22px;
+    width: 22px;
   }
   .nav--hidden {
     -webkit-transform: translateY(-20rem);
@@ -437,10 +418,6 @@ main {
         -ms-flex-align: center;
             align-items: center;
     padding: 1rem;
-  }
-  .logo svg {
-    display: block;
-    margin-bottom: 1rem;
   }
   .logo h1 {
     font-size: 1.5rem;

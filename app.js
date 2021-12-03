@@ -24,22 +24,35 @@ const numberStyle = new Intl.NumberFormat("en-US", {
 //nav-bar colour change
 
 //mobile navbar show/hide behaviour
-{
-  const nav = document.querySelector(".sidebar");
-  let lastScrollY = window.scrollY;
 
-  window.addEventListener("scroll", () => {
-    if (lastScrollY < window.scrollY) {
-      nav.classList.add("nav--hidden");
-      //   console.log(lastScrollY);
-    } else {
-      nav.classList.remove("nav--hidden");
-      //   console.log(lastScrollY);
-    }
+let prevScrollpos = window.pageYOffset;
 
-    lastScrollY = window.scrollY;
-  });
-}
+window.onscroll = function () {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.querySelector(".sidebar").classList.remove("nav--hidden");
+  } else {
+    document.querySelector(".sidebar").classList.add("nav--hidden");
+  }
+  prevScrollpos = currentScrollPos;
+};
+
+// {
+//   const nav = document.querySelector(".sidebar");
+//   let lastScrollY = window.scrollY;
+
+//   window.addEventListener("scroll", () => {
+//     if (lastScrollY < window.scrollY) {
+//       nav.classList.add("nav--hidden");
+//       console.log(lastScrollY);
+//     } else {
+//       nav.classList.remove("nav--hidden");
+//       console.log(lastScrollY);
+//     }
+
+//     lastScrollY = window.scrollY;
+//   });
+// }
 
 // show website navigation on hamburger icon click (in mobile)
 {
@@ -51,7 +64,6 @@ const numberStyle = new Intl.NumberFormat("en-US", {
 
   hamburgerMenu.addEventListener("click", () => {
     console.log("CLICK!");
-    // sidebar.style.height = "100%";
     navMenu.style.height = "100vh";
     hamburgerMenu.style.display = "none";
     xMenu.style.display = "block";

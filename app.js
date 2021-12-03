@@ -21,6 +21,8 @@ const numberStyle = new Intl.NumberFormat("en-US", {
   style: "decimal",
 });
 
+//nav-bar colour change
+
 //mobile navbar show/hide behaviour
 {
   const nav = document.querySelector(".sidebar");
@@ -134,6 +136,12 @@ function cryptoDetails(info) {
       cryptoChange.style.color = "black";
     }
 
+    webSocket(info);
+  }
+}
+
+function webSocket(info) {
+  for (let i = 0; i < info.length; i++) {
     //gradually loads live ticker as time progresses
     let coinType = info[i].symbol;
     let lastPrice = 0;
@@ -144,6 +152,7 @@ function cryptoDetails(info) {
     ws.onmessage = (event) => {
       let stockObject = JSON.parse(event.data);
       let price = parseFloat(stockObject.p);
+      //changes api price to live price
       document.querySelector("#cryptoPrice" + [i]).innerText =
         "Price:" + " " + "$" + parseFloat(stockObject.p);
       // change colour

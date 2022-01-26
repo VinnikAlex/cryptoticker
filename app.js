@@ -1,3 +1,5 @@
+/** @format */
+
 let grid = document.querySelector("#crypto-grid");
 let coins = 100;
 
@@ -37,23 +39,6 @@ window.onscroll = function () {
   }
   prevScrollpos = currentScrollPos;
 };
-
-// {
-//   const nav = document.querySelector(".sidebar");
-//   let lastScrollY = window.scrollY;
-
-//   window.addEventListener("scroll", () => {
-//     if (lastScrollY < window.scrollY) {
-//       nav.classList.add("nav--hidden");
-//       console.log(lastScrollY);
-//     } else {
-//       nav.classList.remove("nav--hidden");
-//       console.log(lastScrollY);
-//     }
-
-//     lastScrollY = window.scrollY;
-//   });
-// }
 
 // show website navigation on hamburger icon click (in mobile)
 {
@@ -106,22 +91,28 @@ window.onload = function () {
 
 // coinranking api
 function requestCoinRanking() {
-  fetch("https://coinranking1.p.rapidapi.com/stats", {
-    method: "GET",
-    headers: {
-      "x-rapidapi-host": "coinranking1.p.rapidapi.com",
-      "x-rapidapi-key": "93b53fd986msh44a95fbb6e42559p104f53jsna297e577f5ff",
-    },
-  })
+  fetch(
+    "https://coinranking1.p.rapidapi.com/stats?referenceCurrencyUuid=yhjMzLPhuIDl",
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "coinranking1.p.rapidapi.com",
+        "x-rapidapi-key": "5e9cae9e7dmsh197e43d1fa33957p11006fjsnf533498a606a",
+      },
+    }
+  )
     .then((response) => response.json())
+    //passing JSON info into coinRank()
     .then((result) => coinRank(result))
+    //catching errors
     .catch((err) => {
       console.error(err);
     });
 }
 
-// insert coinranking api data into application
+// insert coinranking api data into crypto overview divs
 function coinRank(info) {
+  console.log(info);
   let volume = document.querySelector("#volume");
   let totalCoins = document.querySelector("#total-coins");
   let totalExchange = document.querySelector("#total-exchange");

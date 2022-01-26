@@ -22,6 +22,8 @@ a {
   text-decoration: none;
 }
 
+//index.html
+
 .global-stat {
   position: relative;
 
@@ -362,5 +364,13 @@ main {
     h1 {
       font-size: 1.5rem;
     }
+  }
+}
+
+//cryptocurrencies.html
+
+.crypto-search {
+  div {
+    background-color: aqua;
   }
 }

@@ -426,4 +426,8 @@ main {
     font-size: 1.5rem;
   }
 }
+
+.crypto-search div {
+  background-color: aqua;
+}
 /*# sourceMappingURL=style.css.map */
